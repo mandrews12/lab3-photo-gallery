@@ -1,0 +1,50 @@
+/* General Page Styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #f5f5f5;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+/* Key & Search Sections */
+section {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+input[type="text"], input[type="submit"] {
+  padding: 8px;
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+/* Gallery Styling */
+#gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+#gallery img {
+  max-width: 200px;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+#gallery p {
+  font-style: italic;
+  color: #555;
+}
+
+/* Hide gallery initially */
+#gallerySetup {
+  visibility: hidden;
+}
