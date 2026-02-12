@@ -109,12 +109,12 @@ function displayImages(data, term) {
   if (images.length === 0) {
     gallery.textContent = `No result returned for term "${term}".`;
   } else {
-    images.forEach((image) => {
+    for( let image of images) {
       const img = document.createElement("img");
       img.src = image.urls.small;
       img.alt = image.alt_description || term;
       img.title = image.user.name || "";
       gallery.appendChild(img);
-    });
+    };
   }
 }
