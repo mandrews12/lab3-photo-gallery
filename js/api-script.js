@@ -4,8 +4,8 @@
 
 // Save API key and hide initial setup when Save Key button is clicked
 document.getElementById("keySubmit").addEventListener("click", () => {
-    saveKey();
-    hideKeySetup();
+  saveKey();
+  hideKeySetup();
 });
 
 // Get search term user enters when Search button is clicked
@@ -31,7 +31,10 @@ document.getElementById("searchSubmit").addEventListener("click", () => {
            - Only use the Storage API to save the API key if one was inputted
 */
 function saveKey() {
-  
+  let key = document.getElementById("key").value.trim();
+  if (key) {
+    localStorage.setItem("unsplash-api-key", key);
+  }
 }
 
 
@@ -42,7 +45,8 @@ function saveKey() {
            - Update the visibiltity to show the photo gallery search setup (hint: look at the HTML to access and CSS property)
 */
 function hideKeySetup() {
-  
+  document.getElementById("keySetup").style.display = "none";
+  document.getElementById("gallerySetup").style.visibility = "visible";
 }
 
 
@@ -70,10 +74,19 @@ function hideKeySetup() {
              - Update photo gallery message to "Something went wrong..." 
 */
 function getImages(term) {
-  
+  const gallery = document.getElementById("gallery");
+  const apiKey = localStorage.getItem("unsplash-api-key");
+  gallery.textContent = "Loading...";
+  const url = `https://api.unsplash.com/search/photos?client_id=${apiKey}&query=${term}&page=1&per_page=15`;
+
+  fetch(url)
+    .then(response => response.json())
+    .then(data => displayImages(data, term))
+    .catch(error => {
+      console.error(error)
+      gallery.textContent = "Something went wrong...";
+    });
 }
-
-
 
 /*
     TO-DO: Finish the displayImages function:
@@ -89,5 +102,19 @@ function getImages(term) {
              - Update image title tooltip to photographer name. If missing, update to empty string
 */
 function displayImages(data, term) {
+  const gallery = document.getElementById("gallery");
+  gallery.textContent = "";
+  const images = data.results;
   
+  if (images.length === 0) {
+    gallery.textContent = `No result returned for term "${term}".`;
+  } else {
+    images.forEach((image) => {
+      const img = document.createElement("img");
+      img.src = image.urls.small;
+      img.alt = image.alt_description || term;
+      img.title = image.user.name || "";
+      gallery.appendChild(img);
+    });
+  }
 }
